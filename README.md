@@ -14,6 +14,7 @@ This is interview project for MaxiDigital. These are steps fon installation:
 ### State Management
 1. Create your custom Task
 2. Delete, Complete or incomplete task and filter tasks
+3. User Input Validation 
 
 ### API Integration
 1. fetch tasks from URL

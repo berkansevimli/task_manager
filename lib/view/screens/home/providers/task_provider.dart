@@ -1,14 +1,7 @@
-import '../../../../../../core/base/viewmodel/base_view_model.dart';
-import '../../view/screens/home/model/task_model.dart';
+import '../../../../../../../../core/base/viewmodel/base_view_model.dart';
+import '../model/task_model.dart';
 
 class TaskProvider extends BaseViewModel {
-
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-  void setLoading(val) {
-    _isLoading = val;
-    notifyListeners();
-  }
 
   List<TaskModel> _tasks = [];
   List<TaskModel> get tasks => _tasks;

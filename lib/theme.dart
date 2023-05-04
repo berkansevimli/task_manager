@@ -27,10 +27,10 @@ ThemeData lightTheme() {
 
 AppBarTheme appBarTheme(int data) {
   return AppBarTheme(
-      color: Colors.white,
+      color: ColorUtilities.primary_500,
       elevation: 1,
       systemOverlayStyle: SystemUiOverlayStyle(
           statusBarBrightness: data == 1 ? Brightness.light : Brightness.dark),
-      iconTheme: IconThemeData(color: kIconColor),
-      titleTextStyle: TextStyle(color: ColorUtilities.text_900, fontSize: 18));
+      iconTheme: IconThemeData(color: Colors.white),
+      titleTextStyle: TextStyle(color: ColorUtilities.white, fontSize: 18));
 }

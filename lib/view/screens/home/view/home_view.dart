@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:stacked/stacked.dart';
-import 'package:task_manager_interview/core/providers/task_provider.dart';
+import 'package:task_manager_interview/view/screens/api_tasks/view/api_tasks_view.dart';
+import 'package:task_manager_interview/view/screens/home/providers/task_provider.dart';
 import 'package:task_manager_interview/core/utilities/color_utils.dart';
 import 'package:task_manager_interview/view/common_widgets/custom_check_box.dart';
 import 'package:task_manager_interview/view/screens/home/model/task_model.dart';
-import 'package:task_manager_interview/view/screens/home/view_model/home_view_model.dart';
 import 'package:task_manager_interview/view/screens/home/widgets/add_task.dart';
 import '../../../../core/utilities/font_style_utils.dart';
 import '../../../../size_config.dart';
@@ -26,88 +25,90 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     final taskProvider = Provider.of<TaskProvider>(context);
-    return ViewModelBuilder<HomeViewModel>.reactive(
-      viewModelBuilder: () => HomeViewModel(context),
-      builder: (context, viewModel, child) {
-        return Scaffold(
-            floatingActionButton: FloatingActionButton(
-              backgroundColor: ColorUtilities.primary_500,
-              onPressed: () {
-                showDialog(context: context, builder: (builder) => AddTask())
-                    .then((value) {
-                  setState(() {
-                    tasks = taskProvider.tasks;
-                    filteredTasks = taskProvider.tasks;
-                  });
-                });
-              },
-              child: const Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-            ),
-            appBar: AppBar(
-              title: Text(
-                "Task Manager",
-                style: FontStyleUtilities.t1(fontColor: Colors.white),
-              ),
-              backgroundColor: ColorUtilities.primary_500,
-              actions: [
-                PopupMenuButton(
-                    color: ColorUtilities.white,
-                    onSelected: (value) {
-                      switch (value) {
-                        case 0:
-                          setState(() {
-                            filteredTasks = tasks;
-                          });
-                          break;
-                        case 1:
-                          setState(() {
-                            filteredTasks = tasks
-                                .where((element) => element.completed)
-                                .toList();
-                            print(filteredTasks.length);
-                          });
-                          break;
-                        case 2:
-                          setState(() {
-                            filteredTasks = tasks
-                                .where((element) => !element.completed)
-                                .toList();
-                          });
-                          break;
-                        default:
-                      }
-                    },
-                    itemBuilder: (context) => [
-                          const PopupMenuItem(
-                            value: 0,
-                            child: Text("All Tasks"),
-                          ),
-                          const PopupMenuItem(
-                            value: 1,
-                            child: Text("Completed Tasks"),
-                          ),
-                          const PopupMenuItem(
-                            value: 2,
-                            child: Text("Incompleted Tasks"),
-                          ),
-                        ]),
-              ],
-            ),
-            body: filteredTasks.isEmpty
-                ? const Center(child: Text("No Task Found"))
-                : Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: getProportionateScreenHeight(16)),
-                    child: SingleChildScrollView(
-                      child:
-                          buildTaskList(filteredTasks, context, taskProvider),
-                    ),
-                  ));
-      },
-    );
+
+    return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: ColorUtilities.primary_500,
+          onPressed: () {
+            showDialog(context: context, builder: (builder) => const AddTask())
+                .then((value) {
+              setState(() {
+                tasks = taskProvider.tasks;
+                filteredTasks = taskProvider.tasks;
+              });
+            });
+          },
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+        ),
+        appBar: AppBar(
+          title: const Text(
+            "Task Manager",
+          ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (builder) => const ApiTasksView()));
+                },
+                icon: const Icon(
+                  Icons.http,
+                  color: Colors.white,
+                )),
+            PopupMenuButton(
+                color: ColorUtilities.white,
+                onSelected: onSelected,
+                itemBuilder: (context) => [
+                      const PopupMenuItem(
+                        value: 0,
+                        child: Text("All Tasks"),
+                      ),
+                      const PopupMenuItem(
+                        value: 1,
+                        child: Text("Completed Tasks"),
+                      ),
+                      const PopupMenuItem(
+                        value: 2,
+                        child: Text("Incompleted Tasks"),
+                      ),
+                    ]),
+          ],
+        ),
+        body: filteredTasks.isEmpty
+            ? const Center(child: Text("No Task Found"))
+            : Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: getProportionateScreenHeight(16)),
+                child: SingleChildScrollView(
+                  child: buildTaskList(filteredTasks, context, taskProvider),
+                ),
+              ));
+  }
+
+  void onSelected(value) {
+    switch (value) {
+      case 0:
+        setState(() {
+          filteredTasks = tasks;
+        });
+        break;
+      case 1:
+        setState(() {
+          filteredTasks = tasks.where((element) => element.completed).toList();
+          print(filteredTasks.length);
+        });
+        break;
+      case 2:
+        setState(() {
+          filteredTasks = tasks.where((element) => !element.completed).toList();
+        });
+        break;
+      default:
+    }
   }
 
   Column buildTaskList(

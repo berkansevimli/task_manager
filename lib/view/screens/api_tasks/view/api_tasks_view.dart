@@ -105,8 +105,6 @@ class _ApiTasksViewState extends State<ApiTasksView> {
                               id: e.id!,
                               model: model,
                             ));
-
-                  
                   },
                   icon: const Icon(Icons.edit))
             ],

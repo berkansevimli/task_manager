@@ -155,31 +155,33 @@ class _HomeViewState extends State<HomeView> {
                     FontStyleUtilities.t1(fontColor: ColorUtilities.text_900),
               )),
               IconButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (builder) => CupertinoAlertDialog(
-                              title: const Text("Delete Task"),
-                              content: const Text(
-                                  "Are you sure you want to delete this task?"),
-                              actions: [
-                                CupertinoDialogAction(
-                                    onPressed: () {
-                                      taskProvider.removeTask(e.id);
-                                      Navigator.pop(builder);
-                                    },
-                                    child: const Text("Yes")),
-                                CupertinoDialogAction(
-                                    onPressed: () {
-                                      Navigator.pop(builder);
-                                    },
-                                    child: const Text("No"))
-                              ],
-                            ));
-                  },
+                  onPressed: () => deleteNote(context, taskProvider, e),
                   icon: const Icon(Icons.close))
             ],
           ),
         ));
+  }
+
+  Future<dynamic> deleteNote(
+      BuildContext context, TaskProvider taskProvider, TaskModel e) {
+    return showDialog(
+        context: context,
+        builder: (builder) => CupertinoAlertDialog(
+              title: const Text("Delete Task"),
+              content: const Text("Are you sure you want to delete this task?"),
+              actions: [
+                CupertinoDialogAction(
+                    onPressed: () {
+                      taskProvider.removeTask(e.id);
+                      Navigator.pop(builder);
+                    },
+                    child: const Text("Yes")),
+                CupertinoDialogAction(
+                    onPressed: () {
+                      Navigator.pop(builder);
+                    },
+                    child: const Text("No"))
+              ],
+            ));
   }
 }

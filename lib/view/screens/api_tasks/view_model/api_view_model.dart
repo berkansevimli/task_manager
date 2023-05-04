@@ -10,7 +10,7 @@ class ApiViewModel extends BaseViewModel {
   ApiViewModel(this.context);
 
   final BuildContext context;
-  final Api? _api = locator<Api>();
+  final Api _api = locator<Api>();
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -66,14 +66,8 @@ class ApiViewModel extends BaseViewModel {
   Future<dynamic> fetchTasks() async {
     setLoading(true);
     try {
-      final response = await _api!.fetchTasks();
-
-      if (kDebugMode) print("getblogs response ${response}");
-      if (response == null) {
-        setErrorMessage('Error has occured with the fetching tasks');
-      } else {
-        setTasks(response);
-      }
+      final response = await _api.fetchTasks();
+      setTasks(response);
       setLoading(false);
     } catch (e) {
       print(e);

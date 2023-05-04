@@ -7,6 +7,8 @@ This is interview project for MaxiDigital. These are steps fon installation:
 1. Clone Repo and run flutter pub get in your terminal
 2. If you are using mac with silicon processor you may have to do this: open project terminal cd ios -> pod install
 3. and build project on your IOS or Android device 
+4. Screenshots in screenshots folder
+5. APK file in apk_file/app-release.apk
 
 
 ## Features
@@ -26,16 +28,3 @@ This is interview project for MaxiDigital. These are steps fon installation:
 2. stacked and Provider for stateManagement
 3. http for api calls
 4. flutter_svg for icon performance
-
-
-
-
-
-
-
-<!-- - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference. -->
